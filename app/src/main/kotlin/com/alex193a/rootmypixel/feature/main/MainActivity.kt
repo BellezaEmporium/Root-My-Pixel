@@ -493,7 +493,7 @@ private fun ReSukiSuManagerCard(installed: Boolean, context: android.content.Con
             OutlinedButton(
                 onClick = {
                     val intent = Intent(Intent.ACTION_VIEW).apply {
-                        data = "https://github.com/ReSukiSU/ReSukiSU/actions/runs/31654472450".toUri()
+                        data = "https://github.com/Baka-SU/BakaSU/actions/runs/40109566037".toUri()
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     context.startActivity(intent)
@@ -506,7 +506,7 @@ private fun ReSukiSuManagerCard(installed: Boolean, context: android.content.Con
                     modifier = Modifier.size(18.dp),
                 )
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Install ReSukiSU Manager")
+                Text("Install BakaSU Manager")
             }
         }
     }
