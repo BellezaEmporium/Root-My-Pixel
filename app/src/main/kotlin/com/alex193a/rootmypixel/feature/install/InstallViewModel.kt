@@ -986,7 +986,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         private const val SHIZUKU_CVE_SU = "/data/local/tmp/su"
         private const val SHIZUKU_CVE_SOCKET = "/data/local/tmp/temp_su.sock"
         private val LOG_POLL_INTERVAL = 250.milliseconds
-        private const val RESUKISU_PACKAGE = "org.bakasu.bakasu"
+        private const val RESUKISU_PACKAGE = "com.resukisu.resukisu"
         private const val REBOOT_COMMAND =
             "sync; if svc power reboot || reboot; then " +
                     "echo UNROOT_REBOOT_REQUESTED; else echo UNROOT_FAIL:reboot:${'$'}?; fi"
