@@ -6,7 +6,7 @@
 
 ## How the Application Works
 
-Root My Pixel lets you *temporarily* gain root access with ReSukiSU in just one tap.
+Root My Pixel lets you *temporarily* gain root access with BakaSU in just one tap.
 
 ### Installation Workflow
 
@@ -22,7 +22,7 @@ Root My Pixel lets you *temporarily* gain root access with ReSukiSU in just one 
    - Precompiled binary payloads (`.so`) corresponding to each supported build and the native helper tool (`libcve43499root.so`) are extracted from APK assets to `/data/local/tmp`.
    - The IonStack exploit (CVE-2026-43499) is executed to establish a local root daemon socket (`temp_su.sock`), acquiring full `root` privileges.
 
-4. **KernelSU / ReSukiSU Integration**
+4. **KernelSU / BakaSU Integration**
    - Staging of the `ksud` binary matching the device's Kernel Module Interface (KMI, e.g., `android15-6.6`).
    - The app triggers the KernelSU **late-load** mechanism (`ksud late-load --kmi <kmi>`).
    - Verifies KernelSU through its UAPI, with `ksud debug info` and `/proc/modules` as compatibility fallbacks.
