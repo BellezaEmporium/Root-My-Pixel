@@ -242,7 +242,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
                         if (rootTransport != null) {
                             "[+] Unroot root transport verified: ${rootTransport.label}"
                         } else {
-                            "[!] No usable root transport for Unroot; grant this app root in ReSukiSU Manager"
+                            "[!] No usable root transport for Unroot; grant this app root in BakaSU Manager"
                         },
                     )
                 }
@@ -262,7 +262,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
     )
 
     private enum class RootTransport(val label: String) {
-        AppSu("ReSukiSU app su"),
+        AppSu("BakaSU app su"),
         AppCveHelper("current-install CVE helper"),
         ShizukuCveSu("current-install CVE su via Shizuku"),
     }
@@ -460,7 +460,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         diagnoseDaemon()
 
         // 2. Stage ksud via daemon root (cp + chmod + chown)
-        appendLog("[*] Staging ReSukiSU binary...")
+        appendLog("[*] Staging BakaSU binary...")
         val stageCmd = "cp '$ksudSource' $ksudDest && chmod 755 $ksudDest && " +
             "chown root:root $ksudDest"
         var stageSuccess = false
@@ -470,7 +470,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
                 val verify = runHelper(helper, "-c", "ls -la $ksudDest")
                 if (verify.output.contains("rwxr-xr-x") ||
                     verify.output.contains("-rwxr-xr-x")) {
-                    appendLog("ReSukiSU staged: ${verify.output.trim()}")
+                    appendLog("BakaSU staged: ${verify.output.trim()}")
                     stageSuccess = true
                     break
                 }
@@ -490,11 +490,11 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
             appendLog(lateResult.output.take(2000))
         }
 
-        // 4. Verify the driver itself. ReSukiSU LKM mode does not create the
+        // 4. Verify the driver itself. BakaSU LKM mode does not create the
         // legacy filesystem paths that were previously probed here.
         verifyKernelSuLoaded(helper, ksudDest, lateResult)
 
-        // 5. Register only a known ReSukiSU production manager signature.
+        // 5. Register only a known BakaSU production manager signature.
         // Package name alone is not a sufficient trust boundary for a root manager.
         registerManager(helper, ksudDest)
 
@@ -570,11 +570,11 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         }.getOrNull()
 
         if (apkPath.isNullOrBlank()) {
-            appendLog("[!] ReSukiSU manager not installed — skipping registration")
+            appendLog("[!] BakaSU manager not installed — skipping registration")
             return
         }
 
-        appendLog("[*] Verifying the installed ReSukiSU manager signature...")
+        appendLog("[*] Verifying the installed BakaSU manager signature...")
         val signatureResult = runHelper(
             helper,
             "-c",
@@ -597,7 +597,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
             return
         }
 
-        appendLog("[*] Registering the ReSukiSU manager with the module...")
+        appendLog("[*] Registering the BakaSU manager with the module...")
         val setResult = runHelper(
             helper,
             "-c",
@@ -625,7 +625,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
             return
         }
 
-        appendLog("[+] ReSukiSU manager registered and verified")
+        appendLog("[+] BakaSU manager registered and verified")
     }
 
     private fun shellQuote(value: String): String =
@@ -673,7 +673,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
                 rootTransport?.let {
                     "[+] Unroot root transport verified: ${it.label}"
                 }
-                    ?: "[!] No usable root transport for Unroot; grant this app root in ReSukiSU Manager",
+                    ?: "[!] No usable root transport for Unroot; grant this app root in BakaSU Manager",
             )
         }
     }
@@ -817,7 +817,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
 
         runCatching { runCommand(listOf("su", "-c", script)) }
             .getOrNull()
-            ?.let { parseAttempt("ReSukiSU app su", it) }
+            ?.let { parseAttempt("BakaSU app su", it) }
             ?.let { return it }
 
         val helper = File(app.applicationInfo.nativeLibraryDir, "libcve43499root.so")
@@ -986,7 +986,7 @@ class InstallViewModel(application: Application) : AndroidViewModel(application)
         private const val SHIZUKU_CVE_SU = "/data/local/tmp/su"
         private const val SHIZUKU_CVE_SOCKET = "/data/local/tmp/temp_su.sock"
         private val LOG_POLL_INTERVAL = 250.milliseconds
-        private const val RESUKISU_PACKAGE = "com.resukisu.resukisu"
+        private const val RESUKISU_PACKAGE = "org.bakasu.bakasu"
         private const val REBOOT_COMMAND =
             "sync; if svc power reboot || reboot; then " +
                     "echo UNROOT_REBOOT_REQUESTED; else echo UNROOT_FAIL:reboot:${'$'}?; fi"
