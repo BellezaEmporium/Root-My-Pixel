@@ -120,7 +120,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             try {
                 mutableReSukiSuInstalled.value = app.packageManager
-                    .getLaunchIntentForPackage("org.bakasu.bakasu") != null
+                    .getLaunchIntentForPackage("com.resukisu.resukisu") != null
                 val kernelSuStatus = NativeProbe.kernelSuStatus()
                 val probe = NativeProbe.run()
                 if (kernelSuStatus.isActive) {
